@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrew Z. Wang - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #faf7f2;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            font-feature-settings: "kern" 1, "liga" 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Section Transitions */
+        .section {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-transition {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-transition::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+            z-index: 1;
+        }
+
+        .section-transition.animate::before {
+            left: 100%;
+        }
+
+        /* Custom cursor */
+        body {
+            cursor: none;
+        }
+
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #1a1a1a;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem;
+            z-index: 1000;
+            background: rgba(250, 247, 242, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #1a1a1a;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1a1a1a;
+            font-weight: 400;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-links a:hover {
+            color: #666;
+        }
+
+        .menu-toggle {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            background: none;
+            border: none;
+            cursor: none;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            display: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            font-weight: 300;
+            letter-spacing: -0.015em;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease forwards;
+            animation-delay: 0.5s;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 200;
+            line-height: 1.05;
+            margin-bottom: 2rem;
+            color: #1a1a1a;
+            letter-spacing: -0.025em;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+        }
+
+        .hero-description {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            color: #666;
+            font-weight: 300;
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            letter-spacing: 0.005em;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            writing-mode: vertical-lr;
+            font-size: 0.8rem;
+            color: #666;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* About Section */
+        .about {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 4rem 2rem;
+            background: #ffffff;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+            color: #1a1a1a;
+            letter-spacing: -0.01em;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .about-text strong {
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        .about-image {
+            aspect-ratio: 4/5;
+            background: #f5f2ed;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image::after {
+            content: 'Your photo would go here';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #999;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        /* Projects Section */
+        .projects {
+            min-height: 100vh;
+            padding: 6rem 2rem;
+            background: #faf7f2;
+        }
+
+        .projects-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .projects h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 300;
+            margin-bottom: 4rem;
+            text-align: center;
+            color: #1a1a1a;
+            letter-spacing: -0.01em;
+        }
+
+        .projects-grid {
+            display: grid;
+            gap: 4rem;
+        }
+
+        .project-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .project-item:last-child {
+            border-bottom: none;
+        }
+
+        .project-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-item:nth-child(even) .project-image {
+            order: 2;
+        }
+
+        .project-item:nth-child(even) .project-content {
+            order: 1;
+        }
+
+        .project-image {
+            aspect-ratio: 16/10;
+            background: #ffffff;
+            border: 1px solid rgba(26, 26, 26, 0.1);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease;
+        }
+
+        .project-image:hover {
+            transform: scale(1.02);
+        }
+
+        .project-image::after {
+            content: 'Project Visualization';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #999;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        .project-content h3 {
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+            letter-spacing: -0.01em;
+        }
+
+        .project-content p {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .tag {
+            font-size: 0.8rem;
+            color: #1a1a1a;
+            padding: 0.4rem 1rem;
+            border: 1px solid rgba(26, 26, 26, 0.2);
+            border-radius: 20px;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .project-link {
+            color: #1a1a1a;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border-bottom: 1px solid #1a1a1a;
+            padding-bottom: 2px;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-link:hover {
+            opacity: 0.6;
+        }
+
+        /* Skills Section */
+        .skills {
+            padding: 6rem 2rem;
+            background: #ffffff;
+        }
+
+        .skills-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .skills h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 300;
+            margin-bottom: 4rem;
+            color: #1a1a1a;
+            letter-spacing: -0.01em;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .skill-category {
+            padding: 2rem;
+            background: #faf7f2;
+            border-radius: 4px;
+        }
+
+        .skill-category h3 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+        }
+
+        .skill-list {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Contact Section */
+        .contact {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem;
+            background: #1a1a1a;
+            color: #faf7f2;
+            text-align: center;
+        }
+
+        .contact-content h2 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 2rem;
+            letter-spacing: -0.01em;
+        }
+
+        .contact-content p {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        .contact-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border: 1px solid #faf7f2;
+            color: #faf7f2;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .contact-button:hover {
+            background: #faf7f2;
+            color: #1a1a1a;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-container,
+            .project-item {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .project-item:nth-child(even) .project-image,
+            .project-item:nth-child(even) .project-content {
+                order: initial;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            header {
+                padding: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .cursor {
+                display: none;
+            }
+
+            body {
+                cursor: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">Andrew Z. Wang</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Research</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="menu-toggle">Menu</button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero section">
+        <div class="hero-content">
+            <h1>A mathematics & statistics student with a passion for data science and computational research.</h1>
+            <p class="hero-description">
+                Specializing in the intersection of mathematics, statistics, and machine learning. 
+                I believe that rigorous quantitative methods can unlock insights that drive meaningful innovation.
+            </p>
+        </div>
+        <div class="scroll-indicator">Scroll</div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about section section-transition" id="about">
+        <div class="about-container">
+            <div class="about-text">
+                <h2>About Me</h2>
+                <p>I'm an undergraduate researcher at UNC Chapel Hill pursuing a Bachelor of Science in Mathematics & Statistics. My work spans genomic data science, experimental physics, and machine learning applications, with experience at Duke's Genomic Data Science and Epidemiology Lab and UNC's Physics and Machine Learning Lab.</p>
+                <p>I specialize in developing computational frameworks for complex problems, from analyzing NHANES biomarker data to characterizing wave dynamics in experimental physics. My approach combines rigorous statistical methods with innovative programming solutions.</p>
+                <p><strong>Expected Graduation:</strong> May 2027<br>
+                <strong>Location:</strong> Chapel Hill, NC<br>
+                <strong>Contact:</strong> zirun.wang@gmail.com</p>
+            </div>
+            <div class="about-image"></div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects section section-transition" id="projects">
+        <div class="projects-container">
+            <h2>Research & Projects</h2>
+            <div class="projects-grid">
+                <div class="project-item">
+                    <div class="project-image"></div>
+                    <div class="project-content">
+                        <h3>Epigenetic Aging & Stress Analysis</h3>
+                        <p>Conducting ongoing study on the relationship between stress and epigenetic aging, analyzing NHANES biomarker data from 1,158 participants. Developed a reproducible Python framework integrating 10+ stress biomarkers with 4 DNA methylation aging measures.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">R</span>
+                            <span class="tag">NHANES</span>
+                            <span class="tag">Statistical Modeling</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/adub3" class="project-link">GitHub</a>
+                            <a href="#" class="project-link">Research Paper</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <div class="project-image"></div>
+                    <div class="project-content">
+                        <h3>NCAA March Madness Predictor</h3>
+                        <p>Built and validated predictive models on structured data spanning 176 variables per team (around 200K observations). Achieved 75% accuracy through multifold training using PyTorch, targeting ROC-AUC, Precision/Recall, and F1 metrics.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">PyTorch</span>
+                            <span class="tag">Pandas</span>
+                            <span class="tag">Machine Learning</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/adub3" class="project-link">GitHub</a>
+                            <a href="#" class="project-link">Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <div class="project-image"></div>
+                    <div class="project-content">
+                        <h3>HUNL Poker CFR Bot</h3>
+                        <p>Approximated optimal strategy in Heads-Up No-Limit Poker achieving 95% convergence using Monte Carlo Counterfactual Regret Minimization. Optimized under computational constraints by reducing abstraction bins by 90% through logic-based clustering.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Game Theory</span>
+                            <span class="tag">MCCFR</span>
+                            <span class="tag">OpenSpiel</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/adub3" class="project-link">GitHub</a>
+                            <a href="#" class="project-link">Documentation</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <div class="project-image"></div>
+                    <div class="project-content">
+                        <h3>Faraday Wave Analysis</h3>
+                        <p>Identified and characterized new stability transition regimes in low-frequency harmonic Faraday waves. Achieved 90% classification accuracy of wave modes using FFT techniques and captured 20,000+ frames per experiment with Phantom cameras.</p>
+                        <div class="project-tags">
+                            <span class="tag">MATLAB</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">FFT</span>
+                            <span class="tag">Computer Vision</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/adub3" class="project-link">GitHub</a>
+                            <a href="#" class="project-link">Research Paper</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills section section-transition" id="skills">
+        <div class="skills-container">
+            <h2>Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Programming Languages</h3>
+                    <div class="skill-list">
+                        Python<br>
+                        R<br>
+                        MATLAB<br>
+                        C++<br>
+                        BASIC
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Data Science & ML</h3>
+                    <div class="skill-list">
+                        PyTorch<br>
+                        Pandas, NumPy<br>
+                        Scikit-learn<br>
+                        Statistical Modeling<br>
+                        Monte Carlo Methods
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Specialized Tools</h3>
+                    <div class="skill-list">
+                        OpenCV<br>
+                        OpenSpiel<br>
+                        Ultralytics<br>
+                        Matplotlib<br>
+                        Git Version Control
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Research Areas</h3>
+                    <div class="skill-list">
+                        Genomic Data Science<br>
+                        Experimental Physics<br>
+                        Game Theory<br>
+                        Statistical Analysis<br>
+                        Machine Learning
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact section section-transition" id="contact">
+        <div class="contact-content">
+            <h2>Let's collaborate!</h2>
+            <p>Interested in research opportunities, data science projects, or academic collaboration.</p>
+            <a href="mailto:zirun.wang@gmail.com" class="contact-button">Get In Touch</a>
+        </div>
+    </section>
+
+    <script>
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Enhanced Section Transitions
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add visible class for fade-in
+                    entry.target.classList.add('visible');
+                    
+                    // Add transition animation for sections with section-transition class
+                    if (entry.target.classList.contains('section-transition')) {
+                        setTimeout(() => {
+                            entry.target.classList.add('animate');
+                        }, 300);
+                    }
+                }
+            });
+        }, {
+            threshold: 0.2,
+            rootMargin: '-50px'
+        });
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        // Intersection Observer for project animations
+        const projectObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.3,
+            rootMargin: '0px'
+        });
+
+        // Observe project items
+        document.querySelectorAll('.project-item').forEach(item => {
+            projectObserver.observe(item);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Enhanced parallax effect with easing
+        let ticking = false;
+        
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-content');
+            const rate = scrolled * -0.3;
+            const opacity = 1 - (scrolled / (window.innerHeight * 0.8));
+            
+            if (hero) {
+                hero.style.transform = `translate3d(0, ${rate}px, 0)`;
+                hero.style.opacity = Math.max(opacity, 0);
+            }
+            
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        });
+
+        // Add staggered animation to skill categories
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const skills = entry.target.querySelectorAll('.skill-category');
+                    skills.forEach((skill, index) => {
+                        setTimeout(() => {
+                            skill.style.opacity = '1';
+                            skill.style.transform = 'translateY(0)';
+                        }, index * 150);
+                    });
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const skillsSection = document.querySelector('.skills-grid');
+        if (skillsSection) {
+            // Initially hide skill categories
+            document.querySelectorAll('.skill-category').forEach(skill => {
+                skill.style.opacity = '0';
+                skill.style.transform = 'translateY(30px)';
+                skill.style.transition = 'all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1)';
+            });
+            
+            skillObserver.observe(skillsSection);
+        }
+
+        // Add page load animation
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+            
+            // Animate hero section on load
+            setTimeout(() => {
+                const heroSection = document.querySelector('.hero');
+                if (heroSection) {
+                    heroSection.classList.add('visible');
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>
