@@ -23,6 +23,41 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
+        /* Enhanced Interactive Elements */
+        .interactive-element {
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+        }
+
+        .interactive-element:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(26, 26, 26, 0.15);
+        }
+
+        .fab:hover {
+            transform: scale(1.1) rotate(180deg);
+            background: #333;
+        }
+
         /* Section Transitions */
         .section {
             opacity: 0;
@@ -56,23 +91,6 @@
             left: 100%;
         }
 
-        /* Custom cursor */
-        body {
-            cursor: none;
-        }
-
-        .cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #1a1a1a;
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: all 0.1s ease;
-            mix-blend-mode: difference;
-        }
-
         /* Header */
         header {
             position: fixed;
@@ -83,6 +101,12 @@
             background: rgba(250, 247, 242, 0.95);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 1rem 2rem;
+            background: rgba(250, 247, 242, 0.98);
         }
 
         .nav-container {
@@ -98,6 +122,11 @@
             font-weight: 500;
             color: #1a1a1a;
             letter-spacing: 0.02em;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #666;
         }
 
         .nav-links {
@@ -110,9 +139,26 @@
             text-decoration: none;
             color: #1a1a1a;
             font-weight: 400;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
             font-size: 0.9rem;
             letter-spacing: 0.05em;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #1a1a1a;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .nav-links a:hover {
@@ -125,10 +171,15 @@
             color: #1a1a1a;
             background: none;
             border: none;
-            cursor: none;
+            cursor: pointer;
             letter-spacing: 0.05em;
             text-transform: uppercase;
             display: none;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            color: #666;
         }
 
         /* Hero Section */
@@ -172,6 +223,44 @@
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
         }
 
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button.primary {
+            background: #1a1a1a;
+            color: #faf7f2;
+        }
+
+        .cta-button.secondary {
+            border: 1px solid #1a1a1a;
+            color: #1a1a1a;
+            background: transparent;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(26, 26, 26, 0.15);
+        }
+
         .scroll-indicator {
             position: absolute;
             bottom: 3rem;
@@ -182,6 +271,19 @@
             color: #666;
             letter-spacing: 0.1em;
             text-transform: uppercase;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
         }
 
         /* About Section */
@@ -224,12 +326,44 @@
             font-weight: 500;
         }
 
+        .about-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .about-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            color: #1a1a1a;
+            border: 1px solid rgba(26, 26, 26, 0.2);
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+        }
+
+        .about-link:hover {
+            background: #1a1a1a;
+            color: #faf7f2;
+            transform: translateY(-2px);
+        }
+
         .about-image {
             aspect-ratio: 4/5;
             background: #f5f2ed;
             border-radius: 2px;
             position: relative;
             overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .about-image:hover {
+            transform: scale(1.02);
         }
 
         .about-image::after {
@@ -305,15 +439,17 @@
             border-radius: 4px;
             position: relative;
             overflow: hidden;
-            transition: transform 0.4s ease;
+            transition: all 0.4s ease;
+            cursor: pointer;
         }
 
         .project-image:hover {
             transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(26, 26, 26, 0.1);
         }
 
         .project-image::after {
-            content: 'Project Visualization';
+            content: 'Click to view details';
             position: absolute;
             top: 50%;
             left: 50%;
@@ -321,6 +457,7 @@
             color: #999;
             font-style: italic;
             font-size: 0.9rem;
+            text-align: center;
         }
 
         .project-content h3 {
@@ -354,6 +491,14 @@
             border-radius: 20px;
             font-weight: 400;
             letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tag:hover {
+            background: #1a1a1a;
+            color: #faf7f2;
+            transform: translateY(-1px);
         }
 
         .project-links {
@@ -368,13 +513,15 @@
             font-weight: 400;
             letter-spacing: 0.05em;
             text-transform: uppercase;
-            border-bottom: 1px solid #1a1a1a;
+            border-bottom: 2px solid transparent;
             padding-bottom: 2px;
-            transition: opacity 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
         .project-link:hover {
-            opacity: 0.6;
+            border-bottom-color: #1a1a1a;
+            transform: translateY(-2px);
         }
 
         /* Skills Section */
@@ -407,6 +554,30 @@
             padding: 2rem;
             background: #faf7f2;
             border-radius: 4px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(26, 26, 26, 0.05), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .skill-category:hover::before {
+            left: 100%;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(26, 26, 26, 0.1);
         }
 
         .skill-category h3 {
@@ -449,6 +620,13 @@
             font-weight: 300;
         }
 
+        .contact-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
         .contact-button {
             display: inline-block;
             padding: 1rem 2.5rem;
@@ -466,6 +644,70 @@
         .contact-button:hover {
             background: #faf7f2;
             color: #1a1a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Modal for project details */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background-color: #faf7f2;
+            margin: 5% auto;
+            padding: 3rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #1a1a1a;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #1a1a1a, #666);
+            z-index: 10000;
+            transition: width 0.1s ease;
         }
 
         /* Animations */
@@ -510,22 +752,39 @@
                 display: block;
             }
 
-            .cursor {
-                display: none;
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
             }
 
-            body {
-                cursor: auto;
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-links {
+                justify-content: center;
+            }
+
+            .fab {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Custom Cursor -->
-    <div class="cursor"></div>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Floating Action Button -->
+    <a href="#contact" class="fab" title="Contact Me">
+        ✉
+    </a>
 
     <!-- Header -->
-    <header>
+    <header id="header">
         <div class="nav-container">
             <div class="logo">Andrew Z. Wang</div>
             <ul class="nav-links">
@@ -546,6 +805,10 @@
                 Specializing in the intersection of mathematics, statistics, and machine learning. 
                 I believe that rigorous quantitative methods can unlock insights that drive meaningful innovation.
             </p>
+            <div class="cta-buttons">
+                <a href="#projects" class="cta-button primary">View My Work</a>
+                <a href="mailto:zirun.wang@gmail.com" class="cta-button secondary">Get In Touch</a>
+            </div>
         </div>
         <div class="scroll-indicator">Scroll</div>
     </section>
@@ -560,8 +823,20 @@
                 <p><strong>Expected Graduation:</strong> May 2027<br>
                 <strong>Location:</strong> Chapel Hill, NC<br>
                 <strong>Contact:</strong> zirun.wang@gmail.com</p>
+                
+                <div class="about-links">
+                    <a href="https://github.com/adub3" class="about-link" target="_blank" rel="noopener">
+                        📁 GitHub
+                    </a>
+                    <a href="https://linkedin.com/in/andrew-z-wang" class="about-link" target="_blank" rel="noopener">
+                        💼 LinkedIn
+                    </a>
+                    <a href="mailto:zirun.wang@gmail.com" class="about-link">
+                        ✉ Email
+                    </a>
+                </div>
             </div>
-            <div class="about-image"></div>
+            <div class="about-image interactive-element"></div>
         </div>
     </section>
 
@@ -571,7 +846,7 @@
             <h2>Research & Projects</h2>
             <div class="projects-grid">
                 <div class="project-item">
-                    <div class="project-image"></div>
+                    <div class="project-image interactive-element" onclick="openProjectModal('stress-aging')"></div>
                     <div class="project-content">
                         <h3>Epigenetic Aging & Stress Analysis</h3>
                         <p>Conducting ongoing study on the relationship between stress and epigenetic aging, analyzing NHANES biomarker data from 1,158 participants. Developed a reproducible Python framework integrating 10+ stress biomarkers with 4 DNA methylation aging measures.</p>
@@ -582,14 +857,14 @@
                             <span class="tag">Statistical Modeling</span>
                         </div>
                         <div class="project-links">
-                            <a href="https://github.com/adub3" class="project-link">GitHub</a>
-                            <a href="#" class="project-link">Research Paper</a>
+                            <a href="https://github.com/adub3" class="project-link" target="_blank" rel="noopener">GitHub</a>
+                            <a href="#" class="project-link" onclick="openProjectModal('stress-aging')">View Details</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="project-item">
-                    <div class="project-image"></div>
+                    <div class="project-image interactive-element" onclick="openProjectModal('march-madness')"></div>
                     <div class="project-content">
                         <h3>NCAA March Madness Predictor</h3>
                         <p>Built and validated predictive models on structured data spanning 176 variables per team (around 200K observations). Achieved 75% accuracy through multifold training using PyTorch, targeting ROC-AUC, Precision/Recall, and F1 metrics.</p>
@@ -600,14 +875,14 @@
                             <span class="tag">Machine Learning</span>
                         </div>
                         <div class="project-links">
-                            <a href="https://github.com/adub3" class="project-link">GitHub</a>
-                            <a href="#" class="project-link">Live Demo</a>
+                            <a href="https://github.com/adub3" class="project-link" target="_blank" rel="noopener">GitHub</a>
+                            <a href="#" class="project-link" onclick="openProjectModal('march-madness')">View Details</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="project-item">
-                    <div class="project-image"></div>
+                    <div class="project-image interactive-element" onclick="openProjectModal('poker-bot')"></div>
                     <div class="project-content">
                         <h3>HUNL Poker CFR Bot</h3>
                         <p>Approximated optimal strategy in Heads-Up No-Limit Poker achieving 95% convergence using Monte Carlo Counterfactual Regret Minimization. Optimized under computational constraints by reducing abstraction bins by 90% through logic-based clustering.</p>
@@ -618,14 +893,14 @@
                             <span class="tag">OpenSpiel</span>
                         </div>
                         <div class="project-links">
-                            <a href="https://github.com/adub3" class="project-link">GitHub</a>
-                            <a href="#" class="project-link">Documentation</a>
+                            <a href="https://github.com/adub3" class="project-link" target="_blank" rel="noopener">GitHub</a>
+                            <a href="#" class="project-link" onclick="openProjectModal('poker-bot')">View Details</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="project-item">
-                    <div class="project-image"></div>
+                    <div class="project-image interactive-element" onclick="openProjectModal('faraday-waves')"></div>
                     <div class="project-content">
                         <h3>Faraday Wave Analysis</h3>
                         <p>Identified and characterized new stability transition regimes in low-frequency harmonic Faraday waves. Achieved 90% classification accuracy of wave modes using FFT techniques and captured 20,000+ frames per experiment with Phantom cameras.</p>
@@ -636,8 +911,8 @@
                             <span class="tag">Computer Vision</span>
                         </div>
                         <div class="project-links">
-                            <a href="https://github.com/adub3" class="project-link">GitHub</a>
-                            <a href="#" class="project-link">Research Paper</a>
+                            <a href="https://github.com/adub3" class="project-link" target="_blank" rel="noopener">GitHub</a>
+                            <a href="#" class="project-link" onclick="openProjectModal('faraday-waves')">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -650,7 +925,7 @@
         <div class="skills-container">
             <h2>Technical Skills</h2>
             <div class="skills-grid">
-                <div class="skill-category">
+                <div class="skill-category interactive-element">
                     <h3>Programming Languages</h3>
                     <div class="skill-list">
                         Python<br>
@@ -660,7 +935,7 @@
                         BASIC
                     </div>
                 </div>
-                <div class="skill-category">
+                <div class="skill-category interactive-element">
                     <h3>Data Science & ML</h3>
                     <div class="skill-list">
                         PyTorch<br>
@@ -670,7 +945,7 @@
                         Monte Carlo Methods
                     </div>
                 </div>
-                <div class="skill-category">
+                <div class="skill-category interactive-element">
                     <h3>Specialized Tools</h3>
                     <div class="skill-list">
                         OpenCV<br>
@@ -680,7 +955,7 @@
                         Git Version Control
                     </div>
                 </div>
-                <div class="skill-category">
+                <div class="skill-category interactive-element">
                     <h3>Research Areas</h3>
                     <div class="skill-list">
                         Genomic Data Science<br>
@@ -699,17 +974,42 @@
         <div class="contact-content">
             <h2>Let's collaborate!</h2>
             <p>Interested in research opportunities, data science projects, or academic collaboration.</p>
-            <a href="mailto:zirun.wang@gmail.com" class="contact-button">Get In Touch</a>
+            <div class="contact-buttons">
+                <a href="mailto:zirun.wang@gmail.com" class="contact-button">Email Me</a>
+                <a href="tel:+19843695463" class="contact-button">Call Me</a>
+                <a href="https://github.com/adub3" class="contact-button" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://linkedin.com/in/andrew-z-wang" class="contact-button" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
         </div>
     </section>
 
+    <!-- Project Detail Modals -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalContent">
+                <!-- Content will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Custom cursor
-        const cursor = document.querySelector('.cursor');
-        
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
         });
 
         // Enhanced Section Transitions
@@ -819,6 +1119,140 @@
             skillObserver.observe(skillsSection);
         }
 
+        // Modal functionality
+        const modal = document.getElementById('projectModal');
+        const modalContent = document.getElementById('modalContent');
+        const span = document.getElementsByClassName('close')[0];
+
+        // Project details data
+        const projectDetails = {
+            'stress-aging': {
+                title: 'Epigenetic Aging & Stress Analysis',
+                description: 'A comprehensive study examining the relationship between physiological stress and biological aging through epigenetic markers.',
+                details: `
+                    <h3>Project Overview</h3>
+                    <p>This ongoing research project investigates how chronic stress accelerates biological aging through epigenetic mechanisms. Using NHANES data from 1,158 participants, we're developing robust statistical models to quantify these relationships.</p>
+                    
+                    <h3>Key Achievements</h3>
+                    <ul>
+                        <li>Integrated 10+ stress biomarkers with 4 DNA methylation aging measures</li>
+                        <li>Developed reproducible Python framework for large-scale genomic analysis</li>
+                        <li>Applied survey-weighted regression models accounting for complex sampling design</li>
+                        <li>Conducted comprehensive statistical diagnostics and sensitivity analyses</li>
+                    </ul>
+                    
+                    <h3>Technical Approach</h3>
+                    <p>The project employs advanced statistical methods including generalized linear models, cross-validation techniques, and comprehensive diagnostic testing (Shapiro-Wilk, Jarque-Bera, Breusch-Pagan tests) to ensure robust findings.</p>
+                `,
+                technologies: ['Python', 'R', 'NHANES', 'Statistical Modeling', 'Genomics'],
+                status: 'Ongoing',
+                duration: 'May 2025 - Present'
+            },
+            'march-madness': {
+                title: 'NCAA March Madness Predictor',
+                description: 'Machine learning system for predicting NCAA basketball tournament outcomes with high accuracy.',
+                details: `
+                    <h3>Project Overview</h3>
+                    <p>Built a comprehensive predictive modeling system for NCAA March Madness tournament outcomes, processing massive datasets and achieving 75% prediction accuracy through sophisticated ML techniques.</p>
+                    
+                    <h3>Key Achievements</h3>
+                    <ul>
+                        <li>Processed 200K+ observations across 176 variables per team</li>
+                        <li>Achieved 75% accuracy using PyTorch neural networks</li>
+                        <li>Optimized for multiple metrics: ROC-AUC, Precision/Recall, F1-score</li>
+                        <li>Implemented robust cross-validation and training pipelines</li>
+                    </ul>
+                    
+                    <h3>Technical Implementation</h3>
+                    <p>The system uses deep learning architectures with careful feature engineering and validation strategies to handle the complex, high-dimensional nature of basketball statistics.</p>
+                `,
+                technologies: ['Python', 'PyTorch', 'Pandas', 'Machine Learning', 'Neural Networks'],
+                status: 'Active',
+                duration: 'July 2025 - Present'
+            },
+            'poker-bot': {
+                title: 'HUNL Poker CFR Bot',
+                description: 'Advanced game theory implementation using counterfactual regret minimization for optimal poker strategy.',
+                details: `
+                    <h3>Project Overview</h3>
+                    <p>Developed a sophisticated poker AI using Monte Carlo Counterfactual Regret Minimization (MCCFR) to approximate optimal strategies in Heads-Up No-Limit Poker, achieving near-optimal play through millions of simulations.</p>
+                    
+                    <h3>Key Achievements</h3>
+                    <ul>
+                        <li>Achieved 95% convergence to optimal strategy</li>
+                        <li>Reduced computational complexity by 90% through intelligent abstraction</li>
+                        <li>Integrated strategies from Pluribus and DeepStack research</li>
+                        <li>Built within Google's OpenSpiel framework</li>
+                    </ul>
+                    
+                    <h3>Game Theory Innovation</h3>
+                    <p>The implementation leverages cutting-edge game theory concepts, applying regret minimization algorithms to handle the massive game tree of No-Limit Poker while maintaining computational feasibility.</p>
+                `,
+                technologies: ['Python', 'Game Theory', 'MCCFR', 'OpenSpiel', 'Reinforcement Learning'],
+                status: 'Completed',
+                duration: 'January 2025 - Present'
+            },
+            'faraday-waves': {
+                title: 'Faraday Wave Analysis',
+                description: 'Experimental physics research identifying new wave stability regimes using advanced imaging and analysis techniques.',
+                details: `
+                    <h3>Project Overview</h3>
+                    <p>Conducted cutting-edge experimental physics research identifying and characterizing new stability transition regimes in low-frequency harmonic Faraday waves, contributing to fundamental understanding of wave dynamics.</p>
+                    
+                    <h3>Key Achievements</h3>
+                    <ul>
+                        <li>Identified new stability transition regimes in Faraday wave systems</li>
+                        <li>Achieved 90% classification accuracy for wave mode identification</li>
+                        <li>Analyzed 20,000+ frames per experiment using high-speed Phantom cameras</li>
+                        <li>Reduced measurement error to less than 0.1 millimeter precision</li>
+                    </ul>
+                    
+                    <h3>Experimental Innovation</h3>
+                    <p>Combined advanced imaging techniques with sophisticated signal processing using FFT analysis and wave equation solutions to characterize complex fluid dynamics phenomena with unprecedented precision.</p>
+                `,
+                technologies: ['MATLAB', 'Python', 'FFT', 'Computer Vision', 'Experimental Physics'],
+                status: 'Completed',
+                duration: 'August 2023 - July 2025'
+            }
+        };
+
+        function openProjectModal(projectId) {
+            const project = projectDetails[projectId];
+            if (project) {
+                modalContent.innerHTML = `
+                    <h2>${project.title}</h2>
+                    <p><strong>${project.description}</strong></p>
+                    <div style="margin: 2rem 0;">
+                        <span style="background: #e8f4f8; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; margin-right: 1rem;">
+                            ${project.status}
+                        </span>
+                        <span style="color: #666; font-size: 0.9rem;">${project.duration}</span>
+                    </div>
+                    ${project.details}
+                    <div style="margin-top: 2rem;">
+                        <h3>Technologies Used</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
+                            ${project.technologies.map(tech => `<span class="tag">${tech}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        span.onclick = function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
         // Add page load animation
         window.addEventListener('load', () => {
             document.body.classList.add('loaded');
@@ -831,6 +1265,93 @@
                 }
             }, 100);
         });
+
+        // Add interactive hover effects
+        document.querySelectorAll('.interactive-element').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add click animations to buttons
+        document.querySelectorAll('button, .cta-button, .contact-button, .project-link, .about-link').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Create ripple effect
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.position = 'absolute';
+                ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+                ripple.style.borderRadius = '50%';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s ease-out';
+                ripple.style.pointerEvents = 'none';
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                from {
+                    transform: scale(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: scale(2);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Add scroll-to-top functionality for FAB when at bottom
+        let fabScrollTimer;
+        window.addEventListener('scroll', () => {
+            const fab = document.querySelector('.fab');
+            const scrollPercentage = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+            
+            if (scrollPercentage > 80) {
+                fab.innerHTML = '↑';
+                fab.title = 'Back to Top';
+                fab.href = '#';
+                
+                clearTimeout(fabScrollTimer);
+                fabScrollTimer = setTimeout(() => {
+                    fab.innerHTML = '✉';
+                    fab.title = 'Contact Me';
+                    fab.href = '#contact';
+                }, 3000);
+            }
+        });
+
+        console.log('🎉 Portfolio loaded successfully! Built with modern web technologies.');
     </script>
 </body>
 </html>
